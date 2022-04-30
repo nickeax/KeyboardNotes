@@ -1,8 +1,9 @@
 import { NotesHandler } from './classes/notesHandler.js'
+import { Keyboard } from "./classes/keyboard.js";
 
 const notesInput = document.querySelector('#notesInput')
 const notesDisplay = document.querySelector('#notesDisplay')
-const notesHandler = new NotesHandler(notesDisplay);
+const notesHandler = new NotesHandler(notesDisplay, new Keyboard());
 
 document.addEventListener('input', inputHandler)
 

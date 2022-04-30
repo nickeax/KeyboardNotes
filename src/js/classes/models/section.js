@@ -1,6 +1,6 @@
 export class Section {
     notes = []
-    constructor(str = 'BLANK') {
+    constructor(str = 'BLANK', parent) {
         if (!str) {
             this.notes.push('BLANK')
         } else

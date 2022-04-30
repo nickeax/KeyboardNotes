@@ -19,3 +19,39 @@ textarea {
 td {
   border: 1px solid #000;
 }
+
+.keyboard {
+  margin: 2rem;
+  display: flex;
+  padding: 1rem 2rem 2rem 2rem;
+  background-color: rgb(109, 77, 8);
+}
+
+.key {
+  position: relative;
+  min-width: 35px;
+  max-width: 25px;
+  min-height: 150px;
+  margin: 1px;
+  /* border: 1px solid rgb(214, 214, 214); */
+  background-color: #fff;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.8);
+}
+
+.sharp::after {
+  content: ' ';
+  position: absolute;
+  top: -2px;
+  left: -9px;
+  z-index: 666;
+  min-width: 14px;
+  max-width: 14px;
+  min-height: 90px;
+  max-height: 90px;
+  background-color: #333;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  box-shadow: 2px 1px 2px rgba(0, 0, 0, 0.8);
+}
