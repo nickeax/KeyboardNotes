@@ -1,5 +1,21 @@
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   margin: 0;
   border: 0;
   box-sizing: border-box;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+textarea {
+  width: 100%;
+  background-color: #eee;
+}
+
+td {
+  border: 1px solid #000;
 }

@@ -12,8 +12,16 @@
       <div class="leftPane" id="leftPane">
         <form action="#">
           <label for="notesInput">
-            Enter Notes
-            <input type="text" name="notesInput" id="notesInput" />
+            <tt>
+              Enter notes separated by spaces and left and right hand notes
+              separated by '|'. Add new chords on new lines.
+            </tt>
+            <textarea
+              type="text"
+              name="notesInput"
+              id="notesInput"
+              placeholder="a b c | d e f"
+            ></textarea>
           </label>
           <label for="addNotes">
             <button id="addNotes">ADD</button>

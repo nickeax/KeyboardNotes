@@ -1,6 +1,13 @@
 export class Section {
     notes = []
-    constructor(str) {
-        this.notes.push(str.split(' '))
+    constructor(str = 'BLANK') {
+        if (!str) {
+            this.notes.push('BLANK')
+        } else
+            this.notes = str.split(' ')
+    }
+
+    DisplayNotes() {
+        return this.notes.map(n => `[${n}]`).join('')
     }
 }
