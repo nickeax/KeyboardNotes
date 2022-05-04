@@ -1,14 +1,4 @@
-class Key {
-    noteName = ''
-    modifier = ''
-    active = false
-    leftHand = false
-
-    constructor(conf) {
-        this.noteName = conf.noteName
-        this.modifier = conf.modifier
-    }
-}
+import { Key } from "./key.js"
 
 export class Keyboard {
     #notes = []
@@ -18,8 +8,7 @@ export class Keyboard {
     #parent
 
     constructor(size = 2) {
-        console.log(size);
-        this.#parent = document.querySelector('#keyboard')
+        this.#parent = document.querySelector('#output')
         if (size > 2) {
             this.size = 2
         } else {
@@ -39,21 +28,24 @@ export class Keyboard {
             config.modifier = this.#notesWithSharps.findIndex(x => x === curr) === -1 ? 'natural' : 'sharp'
             this.#notes.push(new Key(config))
         }
-        this.DrawKeyboard()
+        // this.DrawKeyboard() // Inital displays
     }
 
-    DrawKeyboard() {
+    DrawKeyboard(left, right) {
+        console.log(left, right);
+        let keyboard = document.createElement('div')
+        keyboard.classList.add('keyboard')
+
         this.#notes.forEach(x => {
             let key = document.createElement('div')
             key.classList.add('key')
             if (x.modifier === 'sharp') {
                 key.classList.add('sharp')
             }
-            this.#parent.appendChild(key)
+            keyboard.appendChild(key)
         })
-    }
-
-    AddSelections(str) {
-
+        this.#parent.appendChild(keyboard)
+        // console.clear()
+        // console.log(this.#parent);
     }
 }

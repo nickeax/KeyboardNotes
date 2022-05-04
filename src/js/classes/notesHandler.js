@@ -14,7 +14,9 @@ export class NotesHandler {
     }
 
     DisplayLeftRightHand() {
-        this.kb.AddSelection()
+        this.leftHandSections.forEach(x => {
+            this.kb.DrawKeyboard(this.leftHandSections, this.rightHandSections)
+        })
     }
 
     Clear() {

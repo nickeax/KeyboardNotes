@@ -8,6 +8,7 @@ const notesHandler = new NotesHandler(notesDisplay, new Keyboard());
 document.addEventListener('input', inputHandler)
 
 function inputHandler(ev) {
+    // console.clear()
     notesHandler.Clear()
     let input = notesInput.value
     if (input.length > 0) {
