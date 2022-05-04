@@ -32,20 +32,6 @@ export class Keyboard {
     }
 
     DrawKeyboard(left, right) {
-        console.log(left, right);
-        let keyboard = document.createElement('div')
-        keyboard.classList.add('keyboard')
-
-        this.#notes.forEach(x => {
-            let key = document.createElement('div')
-            key.classList.add('key')
-            if (x.modifier === 'sharp') {
-                key.classList.add('sharp')
-            }
-            keyboard.appendChild(key)
-        })
-        this.#parent.appendChild(keyboard)
-        // console.clear()
         // console.log(this.#parent);
     }
 }
