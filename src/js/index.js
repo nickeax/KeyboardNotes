@@ -1,9 +1,11 @@
+import { Keyboard } from "./classes/keyboard.js";
 import { NotesBuilder } from "./classes/notesBuilder.js";
 import { NotesHandler } from './classes/notesHandler.js'
 
 document.addEventListener('input', inputHandler)
 const notesHandler = new NotesHandler()
 
+const KB = new Keyboard(4)
 
 function inputHandler(ev) {
     const nb = new NotesBuilder()

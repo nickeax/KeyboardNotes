@@ -6,8 +6,29 @@ export class Keyboard {
     #notesWithSharps = ['c', 'd', 'f', 'g', 'a']
     #notesArray = []
     #parent
+    #masterMap = [{ id: 1, octave: 1, note: 'C' },
+    { id: 2, octave: 1, note: 'C#' },
+    { id: 2, octave: 1, note: 'D-' },
+    { id: 3, octave: 1, note: 'D' },
+    { id: 4, octave: 1, note: 'D#' },
+    { id: 4, octave: 1, note: 'E-' },
+    { id: 5, octave: 1, note: 'E' },
+    { id: 6, octave: 1, note: 'F' },
+    { id: 7, octave: 1, note: 'F#' },
+    { id: 7, octave: 1, note: 'G-' },
+    { id: 8, octave: 1, note: 'G' },
+    { id: 9, octave: 1, note: 'G#' },
+    { id: 9, octave: 1, note: 'A-' },
+    { id: 10, octave: 1, note: 'A' },
+    { id: 11, octave: 1, note: 'A#' },
+    { id: 11, octave: 1, note: 'B-' },
+    { id: 12, octave: 1, note: 'B' }]
+
+    #notesMap = []
 
     constructor(size = 2) {
+        this.BuildNotesMap(size);
+        console.log(this.#notesMap);
         this.#parent = document.querySelector('#output')
         if (size > 2) {
             this.size = 2
@@ -33,5 +54,13 @@ export class Keyboard {
 
     DrawKeyboard(left, right) {
         // console.log(this.#parent);
+    }
+
+    BuildNotesMap(size) {
+        for (let index = 0; index < size; index++) {
+            this.#masterMap.forEach(item => {
+                this.#notesMap.push({ id: item.id + (this.#masterMap.length * index), octave: item.octave + index, note: item.note })
+            })
+        }
     }
 }
