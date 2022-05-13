@@ -28,7 +28,6 @@ export class Keyboard {
 
     constructor(size = 2) {
         this.BuildNotesMap(size);
-        console.log(this.#notesMap);
         this.#parent = document.querySelector('#output')
         if (size > 2) {
             this.size = 2
@@ -52,8 +51,8 @@ export class Keyboard {
         // this.DrawKeyboard() // Inital displays
     }
 
-    DrawKeyboard(left, right) {
-        // console.log(this.#parent);
+    DrawKeyboard(enteredNotes) {
+        console.log(enteredNotes);
     }
 
     BuildNotesMap(size) {

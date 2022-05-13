@@ -4,11 +4,11 @@ import { Note } from "./models/note.js";
 export class NotesBuilder {
     notesInput = document.querySelector('#notesInput')
     notesDisplay = document.querySelector('#notesDisplay')
-    allowedNotes = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
-    accidentals = ['#', '+', '-']
-    allAllowed = this.allowedNotes.concat(this.accidentals)
+    static currentOctave = 0
 
-    constructor() { }
+    constructor() {
+        this.currentOctave = 0
+    }
 
     ProcessRawInput(str) {
         let spaceless = ''
@@ -28,28 +28,61 @@ export class NotesBuilder {
 
     BuildNotes(str) {
         console.clear()
+        const allowedNotes = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+        const accidentals = ['#', '+', '-']
+        const allAllowed = allowedNotes.concat(accidentals)
         let accidentalFlag = false
         let notes = []
         let arr = str.split('')
         arr = arr.map(letter => letter.toUpperCase())
-        arr = arr.filter(x => this.allAllowed.indexOf(x) !== -1)
+        arr = arr.filter(x => allAllowed.indexOf(x) !== -1)
+        let octaveTracker = []
+        let highestOctaves = []
 
         for (let i = 0; i < arr.length; i++) {
-            let isAccidental = this.accidentals.indexOf(arr[i]) !== -1
+            let octave = 0
+            let isAccidental = accidentals.indexOf(arr[i]) !== -1
             if (accidentalFlag == true && isAccidental) {
                 continue
             }
             if (!isAccidental) {
                 accidentalFlag = false
-                notes.push(new Note({ name: arr[i], modifier: 'natural' }))
+                let newNote = new Note({ name: arr[i], modifier: 'natural' })
+                octaveTracker.push(newNote.ToString())
+                if ()
+                    newNote.octave = octaveTracker.filter(x => x === newNote.ToString()).length
+                notes.push(newNote)
             }
             if (isAccidental && !accidentalFlag) {
                 accidentalFlag = true
                 let noteToTranslate = notes[notes.length - 1].name
-                notes[notes.length - 1] = new Note({ name: noteToTranslate, modifier: arr[i] })
+                let newNote = new Note({ name: noteToTranslate, modifier: arr[i] })
+                octaveTracker.push(newNote.ToString())
+                newNote.octave = octaveTracker.filter(x => x === newNote.ToString()).length
+                notes[notes.length - 1] = newNote
+                // Remove natural note that was translated
+                octaveTracker.splice(octaveTracker.indexOf(`${noteToTranslate}natural`), 1)
             }
+            highestOctaves.push(this.FindHighestOctave(notes))
+            console.log(highestOctaves);
         }
 
         return notes
+    }
+
+    FindHighestOctave(arr) { // Find the highest octave count in the notes array
+        let maxOctave = 1
+
+        arr.forEach(x => {
+            if (x.octave > maxOctave) {
+                maxOctave = x.octave
+            }
+        })
+
+        return maxOctave
+    }
+
+    IsNoteInOctave(n) {
+
     }
 }

@@ -1,23 +1,30 @@
 export class Note {
-    translatableSharps = ['B', 'E']
-    translatableFlats = ['C', 'F']
-    translateFlats = { F: 'E', C: 'B' }
-    translateSharps = { B: 'C', E: 'F' }
-    accidentals = ['#', '+', '-']
     name = ''
     modifier = ''
     constructor({ name, modifier }) {
-        console.log(name);
-        if (modifier === '#' && this.translatableSharps.indexOf(name) !== -1) {
-            this.name = this.translateSharps[name]
+        const translatableSharps = ['B', 'E']
+        const translatableFlats = ['C', 'F']
+        const translateFlats = { F: 'E', C: 'B' }
+        const translateSharps = { B: 'C', E: 'F' }
+
+        if (modifier === '#' && translatableSharps.indexOf(name) !== -1) {
+            this.name = translateSharps[name]
             this.modifier = 'natural'
-        } else if (modifier === '-' && this.translatableFlats.indexOf(name) !== -1) {
-            this.name = this.translateFlats[name]
+        } else if (modifier === '-' && translatableFlats.indexOf(name) !== -1) {
+            this.name = translateFlats[name]
             this.modifier = 'natural'
         } else {
             this.name = name
             this.modifier = modifier
         }
+    }
+
+    FullName() {
+        return `${this.name}${this.modifier}`
+    }
+
+    NoteName() {
+        return `${this.name}`
     }
 }
 /* 
