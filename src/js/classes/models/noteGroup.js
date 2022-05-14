@@ -1,11 +1,27 @@
 export class NoteGroup {
-    notes = []
+    #notes = []
 
-    constructor(fullNote) {
-        this.notes.push(fullNote)
+    constructor() { }
+
+    AddNote(n) {
+        this.#notes.push(n)
     }
 
     InGroup(note) {
-        return this.notes.indexOf(note)
+        let test = this.#notes.find(n => n.FullName() === note.FullName())
+
+        return test != undefined
+    }
+
+    LastAdded() {
+        return this.#notes[this.#notes.length - 1]
+    }
+
+    GetNotes() {
+        return this.#notes
+    }
+
+    RemoveLastNote() {
+        this.#notes.pop()
     }
 }

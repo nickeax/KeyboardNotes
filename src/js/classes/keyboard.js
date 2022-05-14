@@ -1,39 +1,40 @@
 import { Key } from "./key.js"
 
 export class Keyboard {
+    #MAX_SIZE = 10
     #notes = []
     #noteNames = 'cdefgab'
     #notesWithSharps = ['c', 'd', 'f', 'g', 'a']
     #notesArray = []
     #parent
-    #masterMap = [{ id: 1, octave: 1, note: 'C' },
-    { id: 2, octave: 1, note: 'C#' },
-    { id: 2, octave: 1, note: 'D-' },
-    { id: 3, octave: 1, note: 'D' },
-    { id: 4, octave: 1, note: 'D#' },
-    { id: 4, octave: 1, note: 'E-' },
-    { id: 5, octave: 1, note: 'E' },
-    { id: 6, octave: 1, note: 'F' },
-    { id: 7, octave: 1, note: 'F#' },
-    { id: 7, octave: 1, note: 'G-' },
-    { id: 8, octave: 1, note: 'G' },
-    { id: 9, octave: 1, note: 'G#' },
-    { id: 9, octave: 1, note: 'A-' },
-    { id: 10, octave: 1, note: 'A' },
-    { id: 11, octave: 1, note: 'A#' },
-    { id: 11, octave: 1, note: 'B-' },
-    { id: 12, octave: 1, note: 'B' }]
+    #masterMap = [{ id: 1, octave: 1, note: 'C', modifier: 'natural' },
+    { id: 2, octave: 1, note: 'C', modifier: '#' },
+    { id: 2, octave: 1, note: 'D', modifier: '-' },
+    { id: 3, octave: 1, note: 'D', modifier: 'natural' },
+    { id: 4, octave: 1, note: 'D', modifier: '#' },
+    { id: 4, octave: 1, note: 'E', modifier: '-' },
+    { id: 5, octave: 1, note: 'E', modifier: 'natural' },
+    { id: 6, octave: 1, note: 'F', modifier: 'natural' },
+    { id: 7, octave: 1, note: 'F', modifier: '#' },
+    { id: 7, octave: 1, note: 'G', modifier: '-' },
+    { id: 8, octave: 1, note: 'G', modifier: 'natural' },
+    { id: 9, octave: 1, note: 'G', modifier: '#' },
+    { id: 9, octave: 1, note: 'A', modifier: '-' },
+    { id: 10, octave: 1, note: 'A', modifier: 'natural' },
+    { id: 11, octave: 1, note: 'A', modifier: '#' },
+    { id: 11, octave: 1, note: 'B', modifier: '-' },
+    { id: 12, octave: 1, note: 'B', modifier: 'natural' }]
 
     #notesMap = []
 
-    constructor(size = 2) {
-        this.BuildNotesMap(size);
+    constructor({ size }) {
         this.#parent = document.querySelector('#output')
-        if (size > 2) {
-            this.size = 2
+        if (size > this.#MAX_SIZE) {
+            this.size = this.#MAX_SIZE
         } else {
             this.size = size
         }
+        this.BuildNotesMap();
 
         for (let i = 0; i < this.size; i++) {
             this.#noteNames.split('').forEach(n => {
@@ -41,7 +42,7 @@ export class Keyboard {
             })
         }
 
-        for (let i = 0; i < this.#notesArray.length; i++) {
+        for (let i = 0; i < this.#masterMap.length; i++) {
             let config = {}
             let curr = this.#notesArray[i]
             config.noteName = curr
@@ -51,14 +52,16 @@ export class Keyboard {
         // this.DrawKeyboard() // Inital displays
     }
 
-    DrawKeyboard(enteredNotes) {
-        console.log(enteredNotes);
+    DrawKeyboard(groups) {
+        for (let i = 0; i < this.#notesMap.length; i++) {
+            console.log(this.#notesMap[i]);
+        }
     }
 
-    BuildNotesMap(size) {
-        for (let index = 0; index < size; index++) {
+    BuildNotesMap() {
+        for (let index = 0; index < this.size; index++) {
             this.#masterMap.forEach(item => {
-                this.#notesMap.push({ id: item.id + (this.#masterMap.length * index), octave: item.octave + index, note: item.note })
+                this.#notesMap.push({ id: item.id + (this.#masterMap.length * index), octave: item.octave + index, note: item.note, modifier: item.modifier })
             })
         }
     }

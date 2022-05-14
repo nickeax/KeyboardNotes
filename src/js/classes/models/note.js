@@ -1,6 +1,6 @@
 export class Note {
-    name = ''
-    modifier = ''
+    #name = ''
+    #modifier = ''
     constructor({ name, modifier }) {
         const translatableSharps = ['B', 'E']
         const translatableFlats = ['C', 'F']
@@ -8,23 +8,27 @@ export class Note {
         const translateSharps = { B: 'C', E: 'F' }
 
         if (modifier === '#' && translatableSharps.indexOf(name) !== -1) {
-            this.name = translateSharps[name]
-            this.modifier = 'natural'
+            this.#name = translateSharps[name]
+            this.#modifier = 'natural'
         } else if (modifier === '-' && translatableFlats.indexOf(name) !== -1) {
-            this.name = translateFlats[name]
-            this.modifier = 'natural'
+            this.#name = translateFlats[name]
+            this.#modifier = 'natural'
         } else {
-            this.name = name
-            this.modifier = modifier
+            this.#name = name
+            this.#modifier = modifier
         }
     }
 
     FullName() {
-        return `${this.name}${this.modifier}`
+        return `${this.#name}${this.#modifier}`
     }
 
     NoteName() {
-        return `${this.name}`
+        return `${this.#name}`
+    }
+
+    Modifier() {
+        return this.#modifier
     }
 }
 /* 

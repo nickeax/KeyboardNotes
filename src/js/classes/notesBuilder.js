@@ -1,13 +1,13 @@
-import { Keyboard } from "./keyboard.js"
 import { Note } from "./models/note.js";
+import { NoteGroup } from "./models/noteGroup.js";
 
 export class NotesBuilder {
     notesInput = document.querySelector('#notesInput')
     notesDisplay = document.querySelector('#notesDisplay')
-    static currentOctave = 0
+    noteGroups = []
 
-    constructor() {
-        this.currentOctave = 0
+    constructor({ ng }) {
+        this.noteGroups.push(new NoteGroup())
     }
 
     ProcessRawInput(str) {
@@ -32,15 +32,12 @@ export class NotesBuilder {
         const accidentals = ['#', '+', '-']
         const allAllowed = allowedNotes.concat(accidentals)
         let accidentalFlag = false
-        let notes = []
+        let noteGroups = []
         let arr = str.split('')
         arr = arr.map(letter => letter.toUpperCase())
         arr = arr.filter(x => allAllowed.indexOf(x) !== -1)
-        let octaveTracker = []
-        let highestOctaves = []
 
         for (let i = 0; i < arr.length; i++) {
-            let octave = 0
             let isAccidental = accidentals.indexOf(arr[i]) !== -1
             if (accidentalFlag == true && isAccidental) {
                 continue
@@ -48,41 +45,33 @@ export class NotesBuilder {
             if (!isAccidental) {
                 accidentalFlag = false
                 let newNote = new Note({ name: arr[i], modifier: 'natural' })
-                octaveTracker.push(newNote.ToString())
-                if ()
-                    newNote.octave = octaveTracker.filter(x => x === newNote.ToString()).length
-                notes.push(newNote)
+                if (this.noteGroups[this.noteGroups.length - 1].InGroup(newNote)) {
+                    let ng = new NoteGroup()
+                    ng.AddNote(newNote)
+                    this.noteGroups.push(ng)
+                } else {
+                    this.noteGroups[this.noteGroups.length - 1].AddNote(newNote)
+                }
             }
             if (isAccidental && !accidentalFlag) {
                 accidentalFlag = true
-                let noteToTranslate = notes[notes.length - 1].name
+                let noteToTranslate = this.GetLastGroup().LastAdded().NoteName()
                 let newNote = new Note({ name: noteToTranslate, modifier: arr[i] })
-                octaveTracker.push(newNote.ToString())
-                newNote.octave = octaveTracker.filter(x => x === newNote.ToString()).length
-                notes[notes.length - 1] = newNote
-                // Remove natural note that was translated
-                octaveTracker.splice(octaveTracker.indexOf(`${noteToTranslate}natural`), 1)
+                if (this.noteGroups[this.noteGroups.length - 1].InGroup(newNote)) {
+                    let ng = new NoteGroup();
+                    ng.AddNote(newNote)
+                    this.noteGroups.push(ng)
+                } else {
+                    this.noteGroups[this.noteGroups.length - 1].RemoveLastNote()
+                    this.noteGroups[this.noteGroups.length - 1].AddNote(newNote)
+                }
             }
-            highestOctaves.push(this.FindHighestOctave(notes))
-            console.log(highestOctaves);
         }
 
-        return notes
+        return this.noteGroups
     }
 
-    FindHighestOctave(arr) { // Find the highest octave count in the notes array
-        let maxOctave = 1
-
-        arr.forEach(x => {
-            if (x.octave > maxOctave) {
-                maxOctave = x.octave
-            }
-        })
-
-        return maxOctave
-    }
-
-    IsNoteInOctave(n) {
-
+    GetLastGroup() {
+        return this.noteGroups[this.noteGroups.length - 1]
     }
 }

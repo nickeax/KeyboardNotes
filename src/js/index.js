@@ -6,17 +6,16 @@ import { NotesHandler } from './classes/notesHandler.js'
 document.addEventListener('input', inputHandler)
 const notesHandler = new NotesHandler()
 
-const KB = new Keyboard(4)
-
 function inputHandler(ev) {
     const nb = new NotesBuilder(new NoteGroup)
     let rawString = nb.ProcessRawInput(notesInput.value)
-    let notesArr = nb.BuildNotes(rawString)
-    KB.DrawKeyboard(notesArr)
+    let groups = nb.BuildNotes(rawString)
+    const KB = new Keyboard({ size: groups.length })
+    KB.DrawKeyboard(groups)
     let op = ''
-    notesArr.forEach(n => {
-        op += `<strong>${n.name}</strong><sup style="min-width: 3rem; display:inline-block;">${n.modifier}</sup> Octave:${n.GetOctave()}<hr>`
-    })
 
     notesDisplay.innerHTML = op
 }
+
+// op += `<strong>${n.NoteName()}</strong><sup style="min-width: 3rem; display:inline-block;">${n.Modifier()}</sup> - Octave: ${i + 1}<hr>`
+
